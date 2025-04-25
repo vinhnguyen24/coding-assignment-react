@@ -16,11 +16,17 @@ import {
   Box,
   FormControl,
   InputLabel,
-  Switch,
-  FormGroup,
-  FormControlLabel,
+  ButtonGroup,
+  IconButton,
+  Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import styles from "./tickets.module.css";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import TicketInfoCard from "client/src/components/TicketInfoCard";
 
 export type TicketsProps = {
   tickets: Ticket[];
@@ -28,6 +34,7 @@ export type TicketsProps = {
   onAdd: (description: string) => void;
   onAssign: (ticketId: number, userId: number) => void;
   onComplete: (ticketId: number) => void;
+  isLoading: boolean;
 };
 
 const Tickets = ({
@@ -36,12 +43,15 @@ const Tickets = ({
   onComplete,
   onAssign,
   onAdd,
+  isLoading,
 }: TicketsProps) => {
   const [filterStatus, setFilterStatus] = useState<
     "all" | "completed" | "incomplete"
   >("all");
   const [newTicketDescription, setNewTicketDescription] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalQuickViewOpen, setIsModalQuickViewOpen] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
 
   type Column = {
     id: string;
@@ -51,11 +61,11 @@ const Tickets = ({
   };
 
   const columns: Column[] = [
-    { id: "id", label: "ID", minWidth: 50, align: "left" },
+    { id: "id", label: "ID", minWidth: 20, align: "left" },
     { id: "description", label: "Description", minWidth: 150, align: "left" },
     { id: "assignee", label: "Assignee", minWidth: 100, align: "left" },
-    { id: "status", label: "Status", minWidth: 100, align: "center" },
-    { id: "actions", label: "Actions", minWidth: 100, align: "center" },
+    { id: "status", label: "Status", minWidth: 100, align: "left" },
+    { id: "actions", label: "Actions", minWidth: 100, align: "left" },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -67,11 +77,15 @@ const Tickets = ({
     }
   };
 
-  // Filter tickets based on completed status (boolean)
   const filteredTickets = tickets.filter((ticket) => {
     if (filterStatus === "all") return true;
     return filterStatus === "completed" ? ticket.completed : !ticket.completed;
   });
+
+  const handleQuickView = (ticket: Ticket) => {
+    setSelectedTicket(ticket);
+    setIsModalQuickViewOpen(true);
+  };
 
   return (
     <div className={styles["tickets"]}>
@@ -106,11 +120,17 @@ const Tickets = ({
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 400,
+            width: {
+              xs: "80%",
+              sm: 400,
+            },
             bgcolor: "background.paper",
             borderRadius: 2,
             boxShadow: 24,
-            p: 4,
+            p: {
+              xs: 2,
+              sm: 4,
+            },
           }}
         >
           <h2>Add New Ticket</h2>
@@ -121,6 +141,7 @@ const Tickets = ({
               label="Ticket Description"
               fullWidth
               variant="outlined"
+              rows={4}
               style={{ marginBottom: "1rem" }}
             />
             <Button
@@ -134,69 +155,158 @@ const Tickets = ({
           </form>
         </Box>
       </Modal>
-      <div className={styles["__table-wrapper"]}>
-        <TableContainer component={Paper} sx={{ margin: 2 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead className={styles["__table-head"]}>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredTickets.map((ticket) => (
-                <TableRow key={ticket.id}>
-                  <TableCell>{ticket.id}</TableCell>
-                  <TableCell>{ticket.description}</TableCell>
-                  <TableCell>
-                    <Select
-                      value={ticket.assigneeId ?? -1}
-                      onChange={(e) =>
-                        onAssign(ticket.id, Number(e.target.value))
-                      }
-                      displayEmpty
-                      fullWidth
+      <Modal
+        open={isModalQuickViewOpen}
+        onClose={() => setIsModalQuickViewOpen(false)}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: {
+              xs: "90%",
+              sm: 800,
+            },
+            bgcolor: "background.paper",
+            borderRadius: 2,
+            boxShadow: 24,
+            p: {
+              xs: 1,
+              sm: 4,
+            },
+          }}
+        >
+          <TicketInfoCard
+            ticket={selectedTicket}
+            users={users}
+            onAssign={onAssign}
+            onComplete={onComplete}
+          />
+        </Box>
+      </Modal>
+      <div>
+        {isLoading ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height={400}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <TableContainer component={Paper} sx={{ margin: 2, maxHeight: 600 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead className={styles["__table-head"]}>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
                     >
-                      <MenuItem value={-1}>Unassigned</MenuItem>
-                      {users.map((user) => (
-                        <MenuItem key={user.id} value={user.id}>
-                          {user.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </TableCell>
-                  <TableCell>
-                    {ticket.completed ? "✅ Completed" : "⏳ Incomplete"}
-                  </TableCell>
-                  <TableCell>
-                    <FormGroup>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={ticket.completed}
-                            onChange={() => onComplete(ticket.id)}
-                            color="primary"
-                            inputProps={{
-                              "aria-label": "Mark ticket as complete",
-                            }}
-                          />
-                        }
-                        label="Complete"
-                      />
-                    </FormGroup>
-                  </TableCell>
+                      {column.label}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {filteredTickets.length ? (
+                  filteredTickets.map((ticket) => (
+                    <TableRow key={ticket.id}>
+                      <TableCell>{ticket.id}</TableCell>
+                      <TableCell
+                        sx={{
+                          maxWidth: 300,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {ticket.description}
+                      </TableCell>
+                      <TableCell>
+                        <Select
+                          value={ticket.assigneeId ?? -1}
+                          onChange={(e) =>
+                            onAssign(ticket.id, Number(e.target.value))
+                          }
+                          displayEmpty
+                          fullWidth
+                        >
+                          <MenuItem value={-1}>Unassigned</MenuItem>
+                          {users.map((user) => (
+                            <MenuItem key={user.id} value={user.id}>
+                              {user.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </TableCell>
+                      <TableCell>
+                        {ticket.completed ? (
+                          <span className={styles["__complete"]}>
+                            ✅ Completed
+                          </span>
+                        ) : (
+                          <span className={styles["__incomplete"]}>
+                            ⏳ Incomplete
+                          </span>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <ButtonGroup variant="outlined" size="small">
+                          <Tooltip
+                            title={
+                              ticket.completed
+                                ? "Mark as Incomplete"
+                                : "Mark as Complete"
+                            }
+                          >
+                            <IconButton
+                              onClick={() => onComplete(ticket.id)}
+                              color={ticket.completed ? "success" : "default"}
+                            >
+                              {ticket.completed ? (
+                                <CheckCircleIcon />
+                              ) : (
+                                <RadioButtonUncheckedIcon />
+                              )}
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title={"Quick View"}>
+                            <IconButton
+                              onClick={() => handleQuickView(ticket)}
+                              color="secondary"
+                            >
+                              <VisibilityIcon />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title={"Open in new tab"}>
+                            <IconButton
+                              onClick={() =>
+                                window.open(`/${ticket.id}`, "_blank")
+                              }
+                            >
+                              <OpenInNewIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </ButtonGroup>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} align="center">
+                      No tickets found.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
       </div>
     </div>
   );

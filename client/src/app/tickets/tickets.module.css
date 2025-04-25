@@ -25,9 +25,11 @@
     font-weight: bold;
   }
 
-  .__table-wrapper {
-    max-height: 600px; /* or whatever fits your layout */
-    overflow-y: auto;
-    overflow-x: hidden;
+  .__complete {
+    color: darkgreen;
+  }
+
+  .__incomplete {
+    color: brown;
   }
 }

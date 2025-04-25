@@ -1,7 +1,14 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.ticket-details {
+}
+
+.__ticket-card {
+  background-color: #ffffff;
+  padding: 20px;
+  height: 70vh;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
