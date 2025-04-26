@@ -27,6 +27,7 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import TicketInfoCard from "client/src/components/TicketInfoCard";
+import { toast } from "react-toastify";
 
 export type TicketsProps = {
   tickets: Ticket[];
@@ -52,6 +53,13 @@ const Tickets = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalQuickViewOpen, setIsModalQuickViewOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [updatingTicket, setUpdatingTicket] = useState<{
+    ticketId: number | null;
+    updateType: string | null;
+  }>({
+    ticketId: null,
+    updateType: null,
+  });
 
   type Column = {
     id: string;
@@ -85,6 +93,31 @@ const Tickets = ({
   const handleQuickView = (ticket: Ticket) => {
     setSelectedTicket(ticket);
     setIsModalQuickViewOpen(true);
+  };
+
+  const handleMarkComplete = async (ticket: Ticket) => {
+    setUpdatingTicket({ ticketId: ticket.id, updateType: "mark_complete" });
+    let textSuccess = ticket.completed
+      ? "Ticket marked as incomplete!"
+      : "Ticket marked as complete!";
+    try {
+      await onComplete(ticket.id);
+      toast.success(textSuccess);
+    } catch (error) {
+      toast.error("Failed to update ticket");
+    }
+    setUpdatingTicket({ ticketId: null, updateType: null });
+  };
+
+  const handleAssign = async (ticket: Ticket, value: number) => {
+    setUpdatingTicket({ ticketId: ticket.id, updateType: "assign" });
+    try {
+      await onAssign(ticket.id, value);
+      toast.success("Assign success!");
+    } catch (error) {
+      toast.error("Assign fail!");
+    }
+    setUpdatingTicket({ ticketId: null, updateType: null });
   };
 
   return (
@@ -228,21 +261,26 @@ const Tickets = ({
                         {ticket.description}
                       </TableCell>
                       <TableCell>
-                        <Select
-                          value={ticket.assigneeId ?? -1}
-                          onChange={(e) =>
-                            onAssign(ticket.id, Number(e.target.value))
-                          }
-                          displayEmpty
-                          fullWidth
-                        >
-                          <MenuItem value={-1}>Unassigned</MenuItem>
-                          {users.map((user) => (
-                            <MenuItem key={user.id} value={user.id}>
-                              {user.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
+                        {updatingTicket.ticketId === ticket.id &&
+                        updatingTicket.updateType === "assign" ? (
+                          <CircularProgress size={42} />
+                        ) : (
+                          <Select
+                            value={ticket.assigneeId ?? -1}
+                            onChange={(e) =>
+                              handleAssign(ticket, Number(e.target.value))
+                            }
+                            displayEmpty
+                            fullWidth
+                          >
+                            <MenuItem value={-1}>Unassigned</MenuItem>
+                            {users.map((user) => (
+                              <MenuItem key={user.id} value={user.id}>
+                                {user.name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        )}
                       </TableCell>
                       <TableCell>
                         {ticket.completed ? (
@@ -256,43 +294,48 @@ const Tickets = ({
                         )}
                       </TableCell>
                       <TableCell>
-                        <ButtonGroup variant="outlined" size="small">
-                          <Tooltip
-                            title={
-                              ticket.completed
-                                ? "Mark as Incomplete"
-                                : "Mark as Complete"
-                            }
-                          >
-                            <IconButton
-                              onClick={() => onComplete(ticket.id)}
-                              color={ticket.completed ? "success" : "default"}
-                            >
-                              {ticket.completed ? (
-                                <CheckCircleIcon />
-                              ) : (
-                                <RadioButtonUncheckedIcon />
-                              )}
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title={"Quick View"}>
-                            <IconButton
-                              onClick={() => handleQuickView(ticket)}
-                              color="secondary"
-                            >
-                              <VisibilityIcon />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title={"Open in new tab"}>
-                            <IconButton
-                              onClick={() =>
-                                window.open(`/${ticket.id}`, "_blank")
+                        {updatingTicket.ticketId === ticket.id &&
+                        updatingTicket.updateType === "mark_complete" ? (
+                          <CircularProgress size={24} />
+                        ) : (
+                          <ButtonGroup variant="outlined" size="small">
+                            <Tooltip
+                              title={
+                                ticket.completed
+                                  ? "Mark as Incomplete"
+                                  : "Mark as Complete"
                               }
                             >
-                              <OpenInNewIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </ButtonGroup>
+                              <IconButton
+                                onClick={() => handleMarkComplete(ticket)}
+                                color={ticket.completed ? "success" : "default"}
+                              >
+                                {ticket.completed ? (
+                                  <CheckCircleIcon />
+                                ) : (
+                                  <RadioButtonUncheckedIcon />
+                                )}
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title={"Quick View"}>
+                              <IconButton
+                                onClick={() => handleQuickView(ticket)}
+                                color="secondary"
+                              >
+                                <VisibilityIcon />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title={"Open in new tab"}>
+                              <IconButton
+                                onClick={() =>
+                                  window.open(`/${ticket.id}`, "_blank")
+                                }
+                              >
+                                <OpenInNewIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </ButtonGroup>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))

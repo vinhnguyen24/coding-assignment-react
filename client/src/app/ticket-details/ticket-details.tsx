@@ -9,12 +9,14 @@ type Props = {
   users: User[];
   onAssign: (ticketId: number, userId: number) => void;
   onComplete: (ticketId: number) => void;
+  resetFlag: number;
 };
 
-const TicketDetails = ({ users, onAssign, onComplete }: Props) => {
+const TicketDetails = ({ users, onAssign, onComplete, resetFlag }: Props) => {
   const { id } = useParams();
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [isError, setIsError] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const TicketDetails = ({ users, onAssign, onComplete }: Props) => {
     };
 
     fetchTicket();
-  }, [id]);
+  }, [id, resetFlag]);
 
   if (isError) {
     return (

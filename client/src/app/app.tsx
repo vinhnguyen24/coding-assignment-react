@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Ticket, User } from "@acme/shared-models";
-
 import styles from "./app.module.css";
 import Tickets from "./tickets/tickets";
 import TicketDetails from "./ticket-details/ticket-details";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import styles
 
 const App = () => {
   const [tickets, setTickets] = useState([] as Ticket[]);
   const [users, setUsers] = useState([] as User[]);
   const [isLoading, setIsLoading] = useState(false);
+  const [resetFlag, setResetFlag] = useState(1);
 
   // Very basic way to synchronize state with server.
   // Feel free to use any state/fetch library you want (e.g. react-query, xstate, redux, etc.).
@@ -34,7 +36,6 @@ const App = () => {
   }, []);
 
   const handleAssign = async (ticketId: number, userId: number) => {
-    setIsLoading(true);
     try {
       if (userId !== -1) {
         await fetch(`/api/tickets/${ticketId}/assign/${userId}`, {
@@ -49,17 +50,16 @@ const App = () => {
       const res = await fetch("/api/tickets");
       const updated = await res.json();
       setTickets(updated);
-      setIsLoading(false);
+      setResetFlag(resetFlag + 1);
     } catch (err) {
       console.error("Assign error", err);
-      setIsLoading(false);
+      setResetFlag(resetFlag + 1);
     }
   };
 
   const handleComplete = async (ticketId: number) => {
     const ticket = tickets.find((t) => t.id === ticketId);
     if (!ticket) return;
-    setIsLoading(true);
     try {
       if (ticket.completed) {
         await fetch(`/api/tickets/${ticketId}/complete`, {
@@ -73,15 +73,14 @@ const App = () => {
       const res = await fetch("/api/tickets");
       const updated = await res.json();
       setTickets(updated);
-      setIsLoading(false);
+      setResetFlag(resetFlag + 1);
     } catch (err) {
       console.error("Complete error", err);
-      setIsLoading(false);
+      setResetFlag(resetFlag + 1);
     }
   };
 
   const handleAddTicket = async (description: string) => {
-    setIsLoading(true);
     try {
       const res = await fetch("/api/tickets", {
         method: "POST",
@@ -93,15 +92,14 @@ const App = () => {
 
       const newTicket = await res.json();
       setTickets((prev) => [...prev, newTicket]);
-      setIsLoading(false);
     } catch (err) {
       console.error("Add ticket error:", err);
-      setIsLoading(false);
     }
   };
 
   return (
     <div className={styles["app"]}>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
       <h1>Ticketing App</h1>
       <Routes>
         <Route
@@ -125,6 +123,7 @@ const App = () => {
               users={users}
               onAssign={handleAssign}
               onComplete={handleComplete}
+              resetFlag={resetFlag}
             />
           }
         />
