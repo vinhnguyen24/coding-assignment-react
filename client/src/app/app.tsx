@@ -5,7 +5,8 @@ import styles from "./app.module.css";
 import Tickets from "./tickets/tickets";
 import TicketDetails from "./ticket-details/ticket-details";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import styles
+import "react-toastify/dist/ReactToastify.css"; 
+import { ErrorBoundary } from "../components/ErrorBoundary";
 
 const App = () => {
   const [tickets, setTickets] = useState([] as Ticket[]);
@@ -98,7 +99,8 @@ const App = () => {
   };
 
   return (
-    <div className={styles["app"]}>
+    <ErrorBoundary>
+      <div className={styles["app"]}>
       <ToastContainer position="top-right" autoClose={5000} hideProgressBar />
       <h1>Ticketing App</h1>
       <Routes>
@@ -129,6 +131,8 @@ const App = () => {
         />
       </Routes>
     </div>
+    </ErrorBoundary>
+    
   );
 };
 

@@ -1,0 +1,20 @@
+asset main.js 8.77 KiB [emitted] [minimized] (name: main) 1 related asset
+asset assets/.gitkeep 0 bytes [emitted] [from: server/src/assets/.gitkeep] [copied]
+cacheable modules 13.9 KiB
+  modules by path ./server/src/users/*.ts 3.38 KiB
+    ./server/src/users/users.module.ts 616 bytes [built] [code generated]
+    + 2 modules
+  modules by path ./server/src/tickets/*.ts 8.95 KiB
+    ./server/src/tickets/tickets.module.ts 701 bytes [built] [code generated]
+    ./server/src/tickets/tickets.service.ts 3.01 KiB [built] [code generated]
+    ./server/src/tickets/tickets.controller.ts 5.26 KiB [built] [code generated]
+  ./server/src/main.ts 795 bytes [built] [code generated]
+  ./server/src/app/app.module.ts 532 bytes [built] [code generated]
+  ./server/src/utils/random-delay.ts 318 bytes [built] [code generated]
+modules by path external "@nestjs/ 84 bytes
+  external "@nestjs/common" 42 bytes [built] [code generated]
+  external "@nestjs/core" 42 bytes [built] [code generated]
+external "tslib" 42 bytes [built] [code generated]
+webpack 5.76.1 compiled successfully in 648 ms
+[36mType-checking in progress...[39m
+[32mNo errors found.[39m

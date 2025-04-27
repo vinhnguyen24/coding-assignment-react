@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Ticket, User } from "@acme/shared-models";
 import {
   Table,
@@ -20,6 +20,7 @@ import {
   IconButton,
   Tooltip,
   CircularProgress,
+  Skeleton
 } from "@mui/material";
 import styles from "./tickets.module.css";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -75,6 +76,14 @@ const Tickets = ({
     { id: "status", label: "Status", minWidth: 100, align: "left" },
     { id: "actions", label: "Actions", minWidth: 100, align: "left" },
   ];
+
+  useEffect(() => {
+    setSelectedTicket((prev) => {
+      if (!prev) return null; 
+      const selectedTicket = tickets.find(item => item.id === prev.id);
+      return selectedTicket ?? null;
+    });
+  }, [tickets]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -227,7 +236,7 @@ const Tickets = ({
             alignItems="center"
             height={400}
           >
-            <CircularProgress />
+            <Skeleton variant="rectangular" height={400} width="100%" />
           </Box>
         ) : (
           <TableContainer component={Paper} sx={{ margin: 2, maxHeight: 600 }}>
@@ -263,7 +272,7 @@ const Tickets = ({
                       <TableCell>
                         {updatingTicket.ticketId === ticket.id &&
                         updatingTicket.updateType === "assign" ? (
-                          <CircularProgress size={42} />
+                          <Skeleton variant="rectangular" height={42} width="100%" />
                         ) : (
                           <Select
                             value={ticket.assigneeId ?? -1}
@@ -296,7 +305,7 @@ const Tickets = ({
                       <TableCell>
                         {updatingTicket.ticketId === ticket.id &&
                         updatingTicket.updateType === "mark_complete" ? (
-                          <CircularProgress size={24} />
+                          <Skeleton variant="rectangular" height={24} width="100%" />
                         ) : (
                           <ButtonGroup variant="outlined" size="small">
                             <Tooltip
