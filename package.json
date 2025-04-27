@@ -7,6 +7,10 @@
     "test": "nx run-many --target=test --projects=server,client"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
     "@nestjs/common": "9.2.1",
     "@nestjs/core": "9.2.1",
     "@nestjs/platform-express": "9.2.1",
@@ -14,7 +18,9 @@
     "react-dom": "18.2.0",
     "react-router": "^6.3.0",
     "react-router-dom": "6.4.3",
-    "tslib": "^2.3.0"
+    "react-toastify": "^11.0.5",
+    "tslib": "^2.3.0",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",
@@ -36,7 +42,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "^14.2.0",
-    "@types/jest": "28.1.8",
+    "@types/jest": "^28.1.8",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",

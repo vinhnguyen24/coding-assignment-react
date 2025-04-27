@@ -1,0 +1,92 @@
+[1m[2mDetermining test suites to run...[22m[22m[999D[K
+
+[1mTest Suites: [22m0 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/ticket-details/[22m[1mticket-details.spec.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[1mTest Suites: [22m0 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        0 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/ticket-details/[22m[1mticket-details.spec.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[1mTest Suites: [22m0 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[31m FAIL [39m[22m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/ticket-details/[22m[1mticket-details.spec.tsx[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/ticket-details/[22m[1mticket-details.spec.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[1mTest Suites: [22m0 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mTest suite failed to run
+
+    Your test suite must contain at least one test.
+
+      [2mat onResult ([22m../node_modules/@jest/core/build/TestScheduler.js[2m:172:18)[22m
+      [2mat [22m../node_modules/@jest/core/build/TestScheduler.js[2m:300:17[22m
+      [2mat [22m../node_modules/emittery/index.js[2m:311:13[22m
+          at Array.map (<anonymous>)
+      [2mat Emittery.emit ([22m../node_modules/emittery/index.js[2m:309:23)[22m
+
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/ticket-details/[22m[1mticket-details.spec.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[1mTest Suites: [22m0 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/ticket-details/[22m[1mticket-details.spec.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[1mTest Suites: [22m0 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.test.tsx[22m
+[0m[7m[33m[1m RUNS [22m[39m[27m[0m [0m[7m[37m client [39m[27m[0m [2mclient/src/app/tickets/[22m[1mtickets.spec.tsx[22m
+
+[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 of 3 total
+[1mTests:       [22m0 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K
+[1mTest Suites: [22m[1m[31m1 failed[39m[22m, [1m[32m2 passed[39m[22m, 3 total
+[1mTests:       [22m[1m[32m2 passed[39m[22m, 2 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m3.029 s[39m[22m
+[2mRan all test suites[22m[2m.[22m
